@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       source_sha:
-        description: Full commit SHA from xiaobai607/airdrop-hunter
+        description: Full commit SHA from the active development branch
         required: true
+        default: '274f40d70a85ca37141655e5ee63d5a49d45330e'
         type: string
 
 permissions:
