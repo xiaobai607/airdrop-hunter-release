@@ -6,7 +6,7 @@ on:
       source_sha:
         description: Full commit SHA from the active development branch
         required: true
-        default: '274f40d70a85ca37141655e5ee63d5a49d45330e'
+        default: '19bed5d0bb2ffa752fffcf1df2677fd66f897f4a'
         type: string
 
 permissions:
