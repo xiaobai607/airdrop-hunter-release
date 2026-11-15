@@ -88,7 +88,16 @@ jobs:
         run: |
           short_sha="${SOURCE_SHA:0:12}"
           tag="debug-${short_sha}"
-          gh release create "$tag" dist/*.apk \
-            --repo "${GITHUB_REPOSITORY}" \
-            --title "Airdrop Hunter Debug ${short_sha}" \
-            --notes "Automated Debug APK built from private core commit ${SOURCE_SHA}. This is a test build, not a production-signed release."
+          title="Airdrop Hunter Debug ${short_sha}"
+          notes="Automated Debug APK built from private core commit ${SOURCE_SHA}. This is a test build, not a production-signed release."
+
+          if gh release view "$tag" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            echo "Release $tag already exists; replacing its APK asset."
+            gh release upload "$tag" dist/*.apk --clobber --repo "${GITHUB_REPOSITORY}"
+            gh release edit "$tag" --repo "${GITHUB_REPOSITORY}" --title "$title" --notes "$notes"
+          else
+            gh release create "$tag" dist/*.apk \
+              --repo "${GITHUB_REPOSITORY}" \
+              --title "$title" \
+              --notes "$notes"
+          fi
